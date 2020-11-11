@@ -1,0 +1,59 @@
+<app-topo-menu></app-topo-menu>
+
+
+<div class="row">
+    <div class="col-2 d-xl-block d-none" id="menuLateral">
+        <mat-list *ngIf="estadosBrasil !== null">
+            <mat-list-item (click)="pegaInformacoesDoEstado(estado.uf)" class="itemList" *ngFor="let estado of estadosBrasil">
+                <span style="cursor: pointer;">{{estado.state}}</span>
+            </mat-list-item>
+        </mat-list>
+    </div>
+    <div class="col" id="content">
+        <select #estadoInfoMobile id="selectMobileEstado" class="d-xl-none d-block" (change)="mudaEstadoInfoMobile()">
+            <option value="{{estado.uf}}" *ngFor="let estado of estadosBrasil">{{estado.state}}</option>
+        </select>
+        <div class="row pb-4">
+            <div class="col-12 text-center mb-1">
+                <h3 style="margin: 0px;">Brasil</h3>
+                <div class="linha50"></div>
+            </div>
+            <div class="col-lg-6 col-12 m-1 ml-auto mr-auto">
+                <div class="cardPadrao">
+                    <span><i><u>Grafico Geral Infectados</u></i></span>
+                    <canvas #graficoGeralInfectados style="width: 100%;"></canvas>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12 m-1 ml-auto mr-auto">
+                <div class="cardPadrao">
+                    <span><i><u>Grafico Geral Mortes</u></i></span>
+                    <canvas #graficoGeralMortes style="width: 100%;"></canvas>
+                </div>
+            </div>
+            <div class="col-12 text-center mt-4">
+                <h3 style="margin: 0px;">Informações local <span *ngIf="this.estadoAtualInfo">{{this.estadoAtualInfo.state}}</span><span *ngIf="!this.estadoAtualInfo">...</span></h3>
+                <div class="linha50 ml-auto mb-4"></div>
+                <table *ngIf="this.estadoAtualInfo" style="background-color: #fff;color: black;padding: 2px;">
+                    <tr>
+                        <td>Infectados</td>
+                        <td>Mortos</td>
+                        <td>Descartados</td>
+                        <td>Suspeitos</td>
+                    </tr>
+                    <tr>
+                        <td>{{estadoAtualInfo.cases}}</td>
+                        <td>{{estadoAtualInfo.deaths}}</td>
+                        <td>{{estadoAtualInfo.refuses}}</td>
+                        <td>{{estadoAtualInfo.suspects}}</td>
+                    </tr>
+                    </table>
+                    <div *ngIf="this.estadoAtualInfo" class="m-0 p-3">
+                        <small>Ultima atualização<br>
+                        {{estadoAtualInfo.datetime | date: 'dd/MM/yyyy'}}</small>
+                    </div>
+            </div>
+            <div class="col espaco m-4"></div>
+        </div>
+    </div>
+</div>
+
